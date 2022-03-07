@@ -1,0 +1,12 @@
+{
+  "name": "thelia/retrait-selon-agenda-module",
+  "license": "LGPL-3.0+",
+  "type": "thelia-module",
+  "require": {
+    "thelia/installer": "~1.1",
+    "johngrogg/ics-parser": "^2"
+  },
+  "extra": {
+    "installer-name": "RetraitSelonAgenda"
+  }
+}

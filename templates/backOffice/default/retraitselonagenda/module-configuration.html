@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-md-12 general-block-decorator">
+        <div class="row">
+            <div class="col-md-12 title title-without-tabs">
+                {intl l="Configuration de l'accès à votre agenda Google" d='retraitselonagenda.fo.default'}
+            </div>
+        </div>
+    
+        <div class="form-container">
+            <div class="row">
+                <div class="col-md-12">
+                    {form name="retraitselonagenda.configuration.form"}
+                        <form action="{url path="/admin/module/retraitselonagenda/configure"}" method="post">
+                            {form_hidden_fields form=$form}
+                        
+                            {include file = "includes/inner-form-toolbar.html"
+                            hide_flags = true
+                            page_url   = "{url path='/admin/module/RetraitSelonAgenda'}"
+                            close_url  = "{url path='/admin/modules'}"
+                            }
+                        
+                            {if $form_error}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{$form_error_message}</div>
+                                    </div>
+                                </div>
+                            {/if}
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {render_form_field form=$form field='calendar_url' value=$calendar_url}
+                                </div>
+    
+                                <div class="col-md-5">
+                                    {render_form_field form=$form field='cache_lifetime' value=$cache_lifetime}
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                    <label class="controle-label">&nbsp;</label>
+                                    <a class="btn btn-primary btn-block" href="{url path="/admin/module/retraitselonagenda/clear-cache"}">{intl l="Vider le cache" d='retraitselonagenda.fo.default'}</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-5">
+                                    {render_form_field form=$form field='nb_max_evenements' value=$nb_max_evenements}
+                                </div>
+                            </div>
+                        </form>
+                    {/form}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 general-block-decorator">
+        <div class="row">
+            <div class="col-md-12 title title-without-tabs">
+                {intl l="Liste des prochains événements présentés à vos clients (maximum %nb)" nb=$nb_max_evenements d='retraitselonagenda.fo.default'}
+            </div>
+        </div>
+        
+        <p>&nbsp;</p>
+        
+        {ifloop rel="liste_evts"}
+            {loop type="retraitselonagenda" name="liste_evts" intervalle='1 month' limit={$nb_max_evenements}}
+                <dl class="dl-horizontal">
+                    <dt>{intl l="Titre:" val=$CHAPO d='retraitselonagenda.fo.default'}</dt>
+                    <dd><strong>{$CHAPO nofilter}</strong></dd>
+
+                    <dt>{intl l="Début:" d='retraitselonagenda.fo.default'}</dt>
+                    <dd>{format_date date=$DEBUT format="d/m/Y H:i"}</dd>
+
+                    <dt>{intl l="Fin:" d='retraitselonagenda.fo.default'}</dt>
+                    <dd>{format_date date=$FIN format="d/m/Y H:i"}</dd>
+
+                    <dt>{intl l="Lieu:" d='retraitselonagenda.fo.default'}</dt>
+                    <dd>{$LIEU nofilter}</dd>
+
+                    <dt>{intl l="Description:" d='retraitselonagenda.fo.default'}</dt>
+                    <dd>{$DESCRIPTION nofilter}</dd>
+                </dl>
+            {/loop}
+        {/ifloop}
+        
+        {elseloop rel="liste_evts"}
+            <div class="alert alert-warning">
+                {intl l="Aucun événement n'a été trouvé, vérifiez l'adresse du calendrier, et la présence d'événements futurs dans votre calendrier." d='retraitselonagenda.fo.default'}
+            </div>
+        {/elseloop}
+    </div>
+</div>

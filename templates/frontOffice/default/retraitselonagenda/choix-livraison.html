@@ -1,0 +1,59 @@
+{loop type="delivery" name="retraitselonagenda" id=$module force_return="true" country=$country}
+<tr style="display: none;" id="retraitselonagenda">
+    <td colspan="3">
+        {ifloop rel="choix_lieu_et_date_retrait"}
+        <div class="panel panel-default">
+            <div class="panel-heading">{intl l="Choisissez la date et le lieu où vous souhaitez retirer votre commande"  d='retraitselonagenda.fo.default'}</div>
+            {$intervalle = '1 month'}
+            <input type="hidden" name="intervalle" value="{$intervalle}">
+            <ul class="list-group">
+                {loop type="retraitselonagenda" name="choix_lieu_et_date_retrait" intervalle=$intervalle limit={$nb_max_evenements}}
+                <li class="list-group-item">
+                    <label><input type="radio" class="selection-lieux" name="selection" value="{$ID}">
+                        {$debut = {format_date date=$DEBUT format="d/m/Y H:i:s"}}
+                        {$fin = {format_date date=$FIN format="d/m/Y H:i:s"}}
+                        {if $debut != $fin}
+                            {intl l="<strong>Les %debut et %fin</strong>: %chapo" debut=$debut fin=$fin chapo=$CHAPO d='retraitselonagenda.fo.default'}
+    
+                        {else}
+                            {intl l="<strong>Le %date</strong>: %chapo" date=$debut chapo=$CHAPO d='retraitselonagenda.fo.default'}
+                        {/if}
+                    </label>
+                    {if $LIEU}<p>{$LIEU}</p>{/if}
+                    {if $DESCRIPTION}<p>{$DESCRIPTION|nl2br nofilter}</p>{/if}
+                </li>
+                {/loop}
+            </ul>
+        </div>
+        {/ifloop}
+        
+        {elseloop rel="choix_lieu_et_date_retrait"}
+            <div class="alert alert-danger">
+                {intl l="Nous n'avons pas de date de retrait à vous proposer pour le moment. Merci de choisir un autre mode de livraison, ou de nous contacter." d='retraitselonagenda.fo.default'}
+            </div>
+        {/elseloop}
+    </td>
+</tr>
+
+<script>
+    $(function(){
+        var $nextButton = $('.btn-primary.pull-right', "#form-cart-delivery");
+        
+        $('.js-change-delivery-method').click(function() {
+            if ($("#delivery-method_{$module}").is(':checked')) {
+                $('.selection-lieux').prop('checked', false);
+                
+                $('#retraitselonagenda').show();
+                $nextButton.prop("disabled", true);
+            } else {
+                $('#retraitselonagenda').hide();
+                $nextButton.prop("disabled", false);
+            }
+        });
+
+        $('.selection-lieux').click(function() {
+            $nextButton.prop("disabled", false);
+        });
+    });
+</script>
+{/loop}

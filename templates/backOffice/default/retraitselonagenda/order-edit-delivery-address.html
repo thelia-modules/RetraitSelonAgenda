@@ -1,0 +1,28 @@
+    {loop type="retraitselonagenda.selected" order_id=$order_id name="lieu_de_livraison"}
+        <tr>
+            <td>{intl l="Retrait le" d='retraitselonagenda.bo.default'}</td>
+            <td>
+                {$debut = {format_date date=$DEBUT format="d/m/Y"}}
+                {$fin = {format_date date=$FIN format="d/m/Y"}}
+                {if $debut != $fin}
+                    {intl l="Les %debut et %fin" d='retraitselonagenda.bo.default'}
+    
+                {else}
+                    {intl l="Le %date" date=$debut chapo=$CHAPO d='retraitselonagenda.bo.default'}
+                {/if}
+
+            </td>
+        </tr>
+        <tr>
+            <td>{intl l="Lieu" d='retraitselonagenda.bo.default'}</td>
+            <td>{$LIEU}</td>
+        </tr>
+        <tr>
+            <td>{intl l="Résumé" d='retraitselonagenda.bo.default'}</td>
+            <td>{$CHAPO}</td>
+        </tr>
+        <tr>
+            <td>{intl l="Description" d='retraitselonagenda.bo.default'}</td>
+            <td>{$DESCRIPTION|nl2br nofilter}</td>
+        </tr>
+    {/loop}
