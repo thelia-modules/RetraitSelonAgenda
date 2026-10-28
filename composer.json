@@ -8,5 +8,6 @@
   },
   "extra": {
     "installer-name": "RetraitSelonAgenda"
-  }
+  },
+  "abandoned": "thelia/local-pickup-module"
 }

@@ -1,5 +1,8 @@
 # Retrait Selon Agenda
 
+> This module is no longer maintained and will not be ported to Thelia 3. Its 2.x versions remain available on Packagist.
+> For in-store pickup, use [LocalPickup](https://github.com/thelia-modules/LocalPickup) (`thelia/local-pickup-module`). Booking a pickup time slot is not covered.
+
 Ce module permet de proposer à vos clients un retrait sur place à une date et un lieu qu'ils peuvent choisir lors de la
 finalisation de leur commande.
 
